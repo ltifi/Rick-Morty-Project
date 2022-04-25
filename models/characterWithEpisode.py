@@ -5,12 +5,12 @@ from config.database import engine, Base
 
 EpisodeCharacterRelation = Table('episodeCharacterRelation', Base.metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('character_id', Integer, ForeignKey('character.id')),
-    Column('episode_id', Integer, ForeignKey('episode.id'))
+    Column('character_id', Integer, ForeignKey('characters.id')),
+    Column('episode_id', Integer, ForeignKey('episodes.id'))
 )
 
 class Character(Base):
-    __tablename__ = "character"
+    __tablename__ = "characters"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(115), unique=False, index=False, nullable=True)
     status = Column(String(115), unique=False, index=True)
@@ -24,7 +24,7 @@ class Character(Base):
 
 
 class Episode(Base):
-    __tablename__ = "episode"
+    __tablename__ = "episodes"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(115), unique=False, index=False, nullable=True)
     air_date = Column(String(115), unique=False, index=True)

@@ -5,10 +5,10 @@ from config.database import engine, Base
 from models.enums import CommentType, StatusType
 
 class Comment(Base):
-    __tablename__ = "comment"
+    __tablename__ = "comments"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    character_id = Column(Integer,ForeignKey('character.id'),index=False, nullable=True)
-    episode_id = Column(Integer,ForeignKey('episode.id'), index=False, nullable=True)
+    character_id = Column(Integer,ForeignKey('characters.id'),index=False, nullable=True)
+    episode_id = Column(Integer,ForeignKey('episodes.id'), index=False, nullable=True)
     type =  Column(Enum(CommentType))
     comment = Column(String(200), unique=False, index=False, nullable=True)
     character = relationship("Character")

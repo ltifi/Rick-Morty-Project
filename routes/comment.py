@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from fastapi_pagination import Page, add_pagination, paginate
+from fastapi_pagination import add_pagination
 from config.database import SessionLocal
 from schemas.comment import comment, CommentBase, EpisodeComment, CharacterComment, CommentUpdate
 from crud.comment import create_comment_character_in_episode, create_comment_episode, create_comment_character
