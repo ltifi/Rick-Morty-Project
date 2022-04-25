@@ -1,0 +1,6 @@
+,character_id,episode_id,type,comment,status
+0,,1.0,Episode,string,New
+1,,2.0,Episode,string,New
+2,1.0,1.0,character_in_episode,string,New
+3,,1.0,Episode,string,New
+4,1.0,,Character,string,New

@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi_pagination import add_pagination
 from config.database import SessionLocal
 from schemas.comment import comment, CommentBase, EpisodeComment, CharacterComment, CommentUpdate
-from crud.comment import create_comment_character_in_episode, create_comment_episode, create_comment_character
+from crud.comment import create_comment_character_episode, create_comment_episode, create_comment_character, load_comments
 from models.comment import Comment
 from typing import Optional
 
@@ -11,7 +11,7 @@ session=SessionLocal()
 
 @app.post("/comment_character_in_epidoe/", response_model=comment)
 def create_comment_character_in_episode(character_data:CommentBase):  
-	character_data= create_comment_character_in_episode(session, character_data)
+	character_data= create_comment_character_episode(session, character_data)
 	return character_data
 
 @app.post('/add_comment_episode')
@@ -51,5 +51,10 @@ def delete_comment_info(id: int):
     session.delete(user_info)
     session.commit()
     return {'message': 'The comment is deleted successfully'}
+
+@app.get('/export_comments')
+async def export_comments():
+    load_comments(session)
+    return {'message': 'Comments are exported into csv'}
 
 add_pagination(app)
