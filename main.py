@@ -1,4 +1,3 @@
-# main.py
 # Import FastAPI
 from fastapi import FastAPI
 from routes.api import router as api_router

@@ -4,13 +4,13 @@ from config.database import SessionLocal
 from schemas.comment import comment, CommentBase, EpisodeComment, CharacterComment, CommentUpdate
 from crud.comment import create_comment_character_in_episode, create_comment_episode, create_comment_character
 from models.comment import Comment
-
+from typing import Optional
 
 app = APIRouter()
 session=SessionLocal()
 
 @app.post("/comment_character_in_epidoe/", response_model=comment)
-def add_comment_character_in_episode(character_data:CommentBase):  
+def create_comment_character_in_episode(character_data:CommentBase):  
 	character_data= create_comment_character_in_episode(session, character_data)
 	return character_data
 
@@ -29,10 +29,13 @@ async def get_comments(id:int):
     db_characters = session.query(Comment).get(id)
     return db_characters
 
-@app.get("/comments/page", response_model=Page[comment])
-async def get_paginated_comments():
-    db_characters = session.query(Comment).all()
-    return paginate(db_characters)
+@app.get("/comments/page")
+async def get_comments(character_id: Optional[int] = None, episode_id: Optional[int] = None, type:Optional[str] = None, comment:Optional[str] = None, status:Optional[str] = None):
+    params = locals().copy()
+    query = session.query(Comment)
+    for attr in [x for x in params if params[x] is not None]:query = query.filter(getattr(Comment, attr).like(params[attr])) 
+    session.commit()
+    return query.all()
 
 @app.put("/comment/{id}")
 async def update_comment(id: int, character_update: CommentUpdate)->Comment:
@@ -43,7 +46,7 @@ async def update_comment(id: int, character_update: CommentUpdate)->Comment:
     return character_info
 
 @app.delete("/comment/{id}")
-def delete_user_info(id: int):
+def delete_comment_info(id: int):
     user_info = session.query(Comment).get(id)
     session.delete(user_info)
     session.commit()
