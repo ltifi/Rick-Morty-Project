@@ -1,6 +1,5 @@
 from pydantic import BaseSettings
 
-
 class Settings(BaseSettings):
     SQLALCHEMY_DB_URL: str
     SECRET_KEY: str

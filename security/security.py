@@ -1,14 +1,12 @@
 import os
 from datetime import timedelta, datetime
 from typing import Union, Optional
-
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from config.database import SessionLocal
-from jose import jwt, JWTError
+from jose import jwt
 from models.user import User
-from functools import lru_cache
 import config.config as config
 
 

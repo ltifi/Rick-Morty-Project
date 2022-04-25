@@ -1,11 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, Table, Enum, Text
-from sqlalchemy.orm import relationship
-
-from config.database import engine, Base,SessionLocal
-import uuid
 import enum
-
-
 
 class CommentType(str, enum.Enum):
     episode = "Episode"

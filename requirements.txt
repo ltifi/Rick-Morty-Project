@@ -1,0 +1,16 @@
+fastapi==0.75.1
+uvicorn==0.17.6
+pydantic==1.8.2
+SQLAlchemy==1.4.35
+fastapi-pagination==0.9.3
+email-validator==1.1.3
+passlib==1.7.4
+python-jose==3.3.0
+python-multipart==0.0.5
+selenium==4.1.3
+webdriver-manager==3.5.4
+pandas==1.3.4
+numpy==1.21.3
+PyMySQL==1.0.2
+requests==2.22.0
+DateTime==4.4
