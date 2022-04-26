@@ -13,5 +13,9 @@ class RoleType(str, enum.Enum):
 class StatusType(str, enum.Enum):
     new = "New"
     review = "Review"
+    rejected="Rejected"
+    approved="Approved"
+
+class CommentStatus(str, enum.Enum):
     Rejected="Rejected"
     approved="Approved"

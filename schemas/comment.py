@@ -9,19 +9,19 @@ class CommentBase(BaseModel):
     episode_id : Optional[int] = None
     type : CommentType = "character_in_episode"
     comment : str
-    status : StatusType
+    status : StatusType = "Review"
     
 class EpisodeComment(BaseModel):
     episode_id:int
     comment:str
     type:CommentType
-    status:StatusType
+    status:StatusType = "Review"
 
 class CharacterComment(BaseModel):
     character_id:int
     comment:str
     type:CommentType = "Character"
-    status:StatusType
+    status:StatusType = "Review"
 
 class CommentUpdate(BaseModel):
     comment:str

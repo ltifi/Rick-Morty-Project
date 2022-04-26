@@ -8,7 +8,7 @@ import config.config
 from fastapi.responses import RedirectResponse, HTMLResponse
 from crud.user import add_user,get_all_users
 from models.user import User
-from schemas.user import UserSchema, UserCreateSchema
+from schemas.user import UserSchema, UserCreateSchema, user
 from security.security import get_user_by_email, authenticate_user, create_access_token
 
 
@@ -55,6 +55,11 @@ def logout():
   response = RedirectResponse('/', status_code= 302)
   response.delete_cookie(key="session_token")
   return response
+
+@app.get("/user", response_model=user)
+async def get_user(id:int):
+    db_user = session.query(User).get(id)
+    return db_user
 
 @app.get("/users", response_model=Page[UserSchema])
 async def get_characters():

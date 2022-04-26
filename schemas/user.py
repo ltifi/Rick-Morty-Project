@@ -20,3 +20,8 @@ class UserCreateSchema(UserSchema):
     class Config:
         orm_mode = False
 
+class user(UserBase):
+    id: int
+
+    class Config:
+        orm_mode = True
