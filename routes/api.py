@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+""" Regroupe API's."""
 
+from fastapi import APIRouter
 from routes import character as characterApi
 from routes import episode as episodeApi
 from routes import comment as commentApi

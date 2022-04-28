@@ -1,17 +1,21 @@
+""" Episode crud file."""
 from sqlalchemy.orm import Session
-from schemas.episode import EpisodeCreate
-from models.characterWithEpisode import Episode
+from schemas.episode_schema import EpisodeCreate
+from models.character_with_episode import Episode
 
-def create_episode(db: Session, ep_data: EpisodeCreate):
-    db_Episode=Episode(id=ep_data.id,name=ep_data.name,air_date=ep_data.air_date,episode=ep_data.episode)
-    db.add(db_Episode)
-    db.commit()
-    db.refresh(db_Episode)
-    return db_Episode
+def create_episode(session: Session, ep_data: EpisodeCreate):
+    """ Create new episode row."""
+    db_episode_info=Episode(id=ep_data.id,name=ep_data.name,
+    air_date=ep_data.air_date,episode=ep_data.episode)
+    session.add(db_episode_info)
+    session.commit()
+    session.refresh(db_episode_info)
+    return db_episode_info
 
-def add_description_episode(db: Session, title:str,description:str):
-    episode_info  = db.query(Episode).filter(Episode.name== title).scalar()
+def add_description_episode(session: Session, title:str,description:str):
+    """ add description for a specific episode row."""
+    episode_info  = session.query(Episode).filter(Episode.name== title).scalar()
     if episode_info:
         episode_info.description=description
-        db.commit()
-        db.refresh(episode_info)
+        session.commit()
+        session.refresh(episode_info)

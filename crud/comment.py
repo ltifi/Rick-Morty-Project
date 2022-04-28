@@ -1,32 +1,42 @@
+""" Comment crud file."""
 from sqlalchemy.orm import Session
-from schemas.comment import CommentBase, EpisodeComment,CharacterComment
-from models.comment import Comment
 import pandas as pd
+from schemas.comment_schema import CommentBase, EpisodeComment,CharacterComment
+from models.comment import Comment
 
-def create_comment_character_episode(db: Session, comment_data: CommentBase):
-    db_Character_Episode=Comment(character_id=comment_data.character_id,episode_id=comment_data.episode_id,type=comment_data.type,comment=comment_data.comment,status=comment_data.status)
-    db.add(db_Character_Episode)
-    db.commit()
-    db.refresh(db_Character_Episode)
-    return db_Character_Episode
+def create_comment_character_episode(session: Session, comment_data: CommentBase):
+    """ Create new row comment about characetr in episode."""
+    db_character_episode=Comment(character_id=comment_data.character_id,
+    episode_id=comment_data.episode_id,type="character_in_episode",
+    comment=comment_data.comment,status="Review")
+    session.add(db_character_episode)
+    session.commit()
+    session.refresh(db_character_episode)
+    return db_character_episode
 
 
-def create_comment_episode(db: Session, comment_data: EpisodeComment):
-    db_Episode=Comment(episode_id=comment_data.episode_id,character_id=None,type=comment_data.type,comment=comment_data.comment,status=comment_data.status)
-    db.add(db_Episode)
-    db.commit()
-    db.refresh(db_Episode)
-    return db_Episode
+def create_comment_episode(session: Session, comment_data: EpisodeComment):
+    """ Create new row comment about episode."""
+    db_episode=Comment(episode_id=comment_data.episode_id,character_id=None,
+    type="Episode",comment=comment_data.comment,status="Review")
+    session.add(db_episode)
+    session.commit()
+    session.refresh(db_episode)
+    return db_episode
 
-def create_comment_character(db: Session, comment_data: CharacterComment):
-    db_Character=Comment(character_id=comment_data.character_id,episode_id=None,type=comment_data.type,comment=comment_data.comment,status=comment_data.status)
-    db.add(db_Character)
-    db.commit()
-    db.refresh(db_Character)
-    return db_Character
+def create_comment_character(session: Session, comment_data: CharacterComment):
+    """ Create new row comment about characetr."""
+    db_character=Comment(character_id=comment_data.character_id,episode_id=None,
+    type="Character",comment=comment_data.comment,status="Review")
+    session.add(db_character)
+    session.commit()
+    session.refresh(db_character)
+    return db_character
 
-def load_comments(db: Session):
-    comment=db.query(Comment.character_id,Comment.episode_id,Comment.type,Comment.comment,Comment.status).all()
-    df = pd.DataFrame(comment, columns=['character_id','episode_id','type','comment','status'])
-    df.to_csv('csv_files/exported_comments.csv',index=True)
-
+def load_comments(session: Session):
+    """ load comments."""
+    comment=session.query(Comment.character_id,Comment.episode_id,
+    Comment.type,Comment.comment,Comment.status).all()
+    df_comment = pd.DataFrame(comment, columns=['character_id',
+    'episode_id','type','comment','status'])
+    df_comment.to_csv('csv_files/exported_comments.csv',index=True)

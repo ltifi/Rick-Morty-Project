@@ -1,6 +1,7 @@
+""" Character in episode model."""
+
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, Text
 from sqlalchemy.orm import relationship
-
 from config.database import engine, Base
 
 EpisodeCharacterRelation = Table('episodeCharacterRelation', Base.metadata,
@@ -10,6 +11,7 @@ EpisodeCharacterRelation = Table('episodeCharacterRelation', Base.metadata,
 )
 
 class Character(Base):
+    """ Character model."""
     __tablename__ = "characters"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(115), unique=False, index=False, nullable=True)
@@ -24,6 +26,7 @@ class Character(Base):
 
 
 class Episode(Base):
+    """ Episode model."""
     __tablename__ = "episodes"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(115), unique=False, index=False, nullable=True)
@@ -33,5 +36,4 @@ class Episode(Base):
     characters = relationship("Character",
                     secondary=EpisodeCharacterRelation,
                     back_populates="episodes")
-
 Base.metadata.create_all(engine)

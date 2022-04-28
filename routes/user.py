@@ -1,14 +1,16 @@
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi_pagination import  Page, add_pagination, paginate
-from config.database import SessionLocal
-from fastapi.security import OAuth2PasswordRequestForm
+""" Users API's."""
+
 from datetime import timedelta
-from starlette.status import HTTP_401_UNAUTHORIZED
-import config.config 
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi_pagination import Page, add_pagination, paginate
+from starlette.status import HTTP_401_UNAUTHORIZED
+from config.database import SessionLocal
+import config.config
 from crud.user import add_user,get_all_users
 from models.user import User
-from schemas.user import UserSchema, UserCreateSchema, user
+from schemas.user_schema import UserSchema, UserCreateSchema, UserSchm
 from security.security import get_user_by_email, authenticate_user, create_access_token
 
 
@@ -19,6 +21,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=config.config.Settings().ACCESS_TOKEN_EXPIRE_MINUTES
 
 @app.post("/signUp", response_model=UserSchema)
 def sign_up(user_data: UserCreateSchema):
+    """ Signup API."""
     user = get_user_by_email(session, user_data.email)
     if user:
         raise HTTPException(
@@ -27,13 +30,14 @@ def sign_up(user_data: UserCreateSchema):
         )
     new_user = add_user(session, user_data)
     return new_user
-    
+
 
 @app.post("/login", response_class=HTMLResponse)
 def login_for_access_token(
         form_data: OAuth2PasswordRequestForm = Depends()
 ):
-    user_data = authenticate_user(form_data.username, form_data.password)
+    """ Login API."""
+    user_data = authenticate_user(session,form_data.username, form_data.password)
     if not user_data:
         raise HTTPException(
             HTTP_401_UNAUTHORIZED,
@@ -52,30 +56,35 @@ def login_for_access_token(
 
 @app.post("/logout",response_class=HTMLResponse)
 def logout():
-  response = RedirectResponse('/', status_code= 302)
-  response.delete_cookie(key="session_token")
-  return response
+    """ Logout API."""
+    response = RedirectResponse('/', status_code= 302)
+    response.delete_cookie(key="session_token")
+    return response
 
-@app.get("/user", response_model=user)
-async def get_user(id:int):
-    db_user = session.query(User).get(id)
+@app.get("/user", response_model=UserSchm)
+async def get_user(user_id:int):
+    """ Get a specific user API."""
+    db_user = session.query(User).get(user_id)
     return db_user
 
 @app.get("/users", response_model=Page[UserSchema])
-async def get_characters():
+async def get_users():
+    """ Get all users API."""
     db_users = get_all_users(session)
     return paginate(db_users)
 
 @app.delete("/user")
-def delete_user_info(id: int):
-    user_info = session.query(User).get(id)
+def delete_user_info(user_id: int):
+    """ Delete a specific user API."""
+    user_info = session.query(User).get(user_id)
     session.delete(user_info)
     session.commit()
     return {'message': 'The user is deleted successfully'}
 
 @app.put("/user")
-async def update_user_lastname(id: int, username_update: UserSchema)->User:
-    username_info = session.query(User).get(id)
+async def update_user_lastname(user_id: int, username_update: UserSchema)->User:
+    """ Modify a specific user API."""
+    username_info = session.query(User).get(user_id)
     username_info.lastName = username_update.lastName
     username_info.firstName = username_update.firstName
     username_info.email = username_update.email
