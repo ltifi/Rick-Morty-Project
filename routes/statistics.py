@@ -23,8 +23,8 @@ def count_letters_comments_episode():
 @app.get('/export_comment_with_rejeted_status')
 def number_comments_with_rejected_status_per_episode():
     """ export comments with rejeted status per episode API."""
-    df_comment=pd.read_csv('csv_files/exported_comments.csv')
+    df_comment=pd.read_csv('/RickeyMorty/csv_files/exported_comments.csv')
     df_comment=df_comment[df_comment['type'] == 'Episode']
-    df_comment=df_comment[df_comment['status'] == 'Rejected']
+    df_comment=df_comment[df_comment['status'] == "Rejected"]
     size=df_comment.groupby(['episode_id']).size()
-    size.to_csv('csv_files/comment_with_rejected_status_per_episode.csv')
+    size.to_csv('/RickeyMorty/csv_files/comment_with_rejected_status_per_episode.csv')

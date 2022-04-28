@@ -26,7 +26,7 @@ class UserCreateSchema(UserSchema):
         """ User Config Schema ."""
         orm_mode = False
 
-class UserSchm(UserBase):
+class UserAllSchema(UserSchema):
     """ User Schema with id ."""
     id: int
 

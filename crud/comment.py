@@ -39,4 +39,4 @@ def load_comments(session: Session):
     Comment.type,Comment.comment,Comment.status).all()
     df_comment = pd.DataFrame(comment, columns=['character_id',
     'episode_id','type','comment','status'])
-    df_comment.to_csv('csv_files/exported_comments.csv',index=True)
+    df_comment.to_csv('/RickeyMorty/csv_files/exported_comments.csv',index=True)

@@ -10,7 +10,7 @@ from config.database import SessionLocal
 import config.config
 from crud.user import add_user,get_all_users
 from models.user import User
-from schemas.user_schema import UserSchema, UserCreateSchema, UserSchm
+from schemas.user_schema import UserSchema, UserCreateSchema, UserAllSchema
 from security.security import get_user_by_email, authenticate_user, create_access_token
 
 
@@ -61,13 +61,13 @@ def logout():
     response.delete_cookie(key="session_token")
     return response
 
-@app.get("/user", response_model=UserSchm)
+@app.get("/user", response_model=UserAllSchema)
 async def get_user(user_id:int):
     """ Get a specific user API."""
     db_user = session.query(User).get(user_id)
     return db_user
 
-@app.get("/users", response_model=Page[UserSchema])
+@app.get("/users", response_model=Page[UserAllSchema])
 async def get_users():
     """ Get all users API."""
     db_users = get_all_users(session)

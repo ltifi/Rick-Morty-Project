@@ -36,5 +36,5 @@ for sn in range(1,7):
             file1 = open(completeName, 'wb').write(response.content)
 community_episodes = pd.DataFrame(community_episodes, columns = ['episode_number','title','season', 'description'])
 community_images=pd.DataFrame(community_images, columns = ['thumbnail'])
-community_episodes.to_csv('csv_files/description.csv')
-community_images.to_csv('csv_files/thumbnail.csv')
+community_episodes.to_csv('/RickeyMorty/csv_files/description.csv')
+community_images.to_csv('/RickeyMorty/csv_files/thumbnail.csv')
