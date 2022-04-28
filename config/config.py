@@ -1,5 +1,6 @@
 
 """ configuration file."""
+
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):

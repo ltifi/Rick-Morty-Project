@@ -88,7 +88,8 @@ user_id:int, comment_status:CommentStatus)->Comment:
 @app.put("/modif_comment_status")
 async def admin_update_comment_status(comment_id: int,
  user_id:int)->Comment:
-    """ This API is used by the admin to update the status of the comment as new in the case of an accepted comment or to delete it in the case of a rejected status."""
+    """ This API is used by the admin to update the status of the comment as new in the case
+    of an accepted comment or to delete it in the case of a rejected status."""
     comment_info = session.query(Comment).get(comment_id)
     user_info = session.query(User).get(user_id)
     if user_info.role=="Admin":

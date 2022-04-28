@@ -1,4 +1,5 @@
 """ Character in episode crud file."""
+
 from sqlalchemy.orm import Session
 from schemas.character_episode_schema import EpisodeCharacterRelationCreate
 from models.character_with_episode import EpisodeCharacterRelation

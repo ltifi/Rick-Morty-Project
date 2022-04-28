@@ -1,4 +1,5 @@
 """ Character crud file."""
+
 from sqlalchemy.orm import Session
 from schemas.character_schema import CharacterCreate
 from models.character_with_episode import Character
