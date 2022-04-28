@@ -8,14 +8,14 @@ from config.database import SessionLocal
 
 session=SessionLocal()
 
-with open('./json/rick_morty-episodes_v1.json',encoding="utf8") as json_data:
+with open('/RickeyMorty/json/rick_morty-episodes_v1.json',encoding="utf8") as json_data:
     data_dict = json.load(json_data)
 data_episodes = json.dumps(data_dict)
 data_dict_episodes = json.loads(data_episodes)
 for temp_data in data_dict_episodes:
     ep=Episode(name=temp_data['name'],air_date=temp_data['air_date'],episode=temp_data['episode'])
     create_episode(session,ep)
-with open('./json/rick_morty-characters_v1.json',encoding="utf8") as json_data:
+with open('/RickeyMorty/json/rick_morty-characters_v1.json',encoding="utf8") as json_data:
     data_dict = json.load(json_data)
 data_characters = json.dumps(data_dict)
 data_dict_characters = json.loads(data_characters)

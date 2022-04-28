@@ -15,8 +15,9 @@ def create_episode(session: Session, ep_data: EpisodeCreate):
 
 def add_description_episode(session: Session, title:str,description:str):
     """ add description for a specific episode row."""
-    episode_info  = session.query(Episode).filter(Episode.name== title).scalar()
-    if episode_info:
-        episode_info.description=description
-        session.commit()
-        session.refresh(episode_info)
+    episode_info  = session.query(Episode).filter(Episode.name== title).all()
+    for info in episode_info:
+        if info:
+            info.description=description
+            session.commit()
+            session.refresh(info)
