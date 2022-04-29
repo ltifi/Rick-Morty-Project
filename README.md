@@ -13,7 +13,7 @@ The technical requirements for this project are as follows:
 - Use of FastApi
 
 
--- To run the projet --
+-- To run the project --
 
 - Clone the project: git clone https://github.com/ltifi/Rick-Morty-Project.git
 
@@ -26,7 +26,7 @@ The technical requirements for this project are as follows:
 
 - make start
 
--- To run the projet Scripts --
+-- To run the project Scripts --
 
 1- docker-compose exec app sh <br />
 2- python3 script.py <br />
