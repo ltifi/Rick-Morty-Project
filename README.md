@@ -1,6 +1,6 @@
 Quickstart
 
-Our mission is to create a REST API that for the user to write comments about the characters and episodes of the Rick&Morty anime.
+Our mission is to create a REST API for the user to write comments about the characters and episodes of the Rick&Morty anime.
 
 -- Requirements --
 
